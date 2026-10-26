@@ -1,5 +1,15 @@
 # Changelog
 
+## v9 — Difficulty levels, visual DI and personalised recap
+
+- Add Low, Medium and High difficulty selection with distinct DILR and mixed-practice variants. High DILR tasks use TITA-style one-letter responses. Labels are exploratory, not CAT-calibrated.
+- Add a visual data-interpretation question with an accessible SVG chart and expandable data table.
+- Add a personalised results modal based on observed answers, skips and hint use, with rule-based next steps and a clear disclaimer that it is not a validated diagnosis or CAT score prediction.
+- Make the focus-switch route six tasks, add level-aware explanations and hint wording, and make the route indicator use six columns.
+- Keep local Coach messaging, calculator and CSV export; coach message text is not exported.
+- Add and run browser smoke checks for all three difficulty paths, the visual chart/table, the feedback modal, calculator error handling, coach hints, TITA input, dark mode and mobile horizontal overflow.
+
+
 ## v8 — Progressive coaching and safety fixes
 
 - Coach hints for both DILR tasks advance through three stages: nudge, structural hint, and elimination guidance.

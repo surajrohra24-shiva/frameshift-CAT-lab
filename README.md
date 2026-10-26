@@ -4,15 +4,18 @@ A self-contained browser prototype exploring whether a short, guided practice se
 
 > **Prototype status:** Exploratory MVP. It is not an official CAT mock, validated diagnostic, percentile predictor, live AI tutor or evidence of improved CAT performance. All questions are original illustrative items and are not independently CAT-calibrated.
 
-## v8 features
+## v9 features
 
-- Guided five-task practice journey: DILR ordering, Quant percentages, VARC inference, Quant scoring and a second DILR constraint set.
+- Six-task guided practice journey: DILR ordering, Quant percentages, VARC inference, Quant scoring, visual data interpretation, and a new DILR transfer set.
 - Step-by-step solutions, candidate-placement diagrams and expandable distractor rationales.
 - Progressive three-tier DILR hints in the Coach, moving from a non-revealing prompt to more direct placement guidance.
 - Optional confidence, scratchpads, review flags, elapsed-time tracking and a results dashboard with rule-based next actions.
 - Light/dark theme, animated transitions, reduced-motion support and keyboard shortcuts.
 - Local calculator with arithmetic, square root, reciprocal, percentage, sign change, memory and recent calculation history.
 - Contextual Coach drawer. The Coach is a **local rule-based demo**, not a generative AI service or a human mentor.
+- Low / Medium / High difficulty selection at the start, with distinct DILR and mixed-practice banks. High-level DILR uses type-in-the-answer (TITA) input. Difficulty labels are prototype-defined, not officially CAT-calibrated.
+- Accessible SVG chart questions with a corresponding data table.
+- A performance-based end-of-session modal with a suggested next action; it is rule-based and explicitly not a validated diagnostic.
 - CSV session export, with coach messages excluded from the export; aggregate topic counts and hint levels may be recorded.
 
 ## Run locally
