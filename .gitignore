@@ -1,0 +1,26 @@
+# Local exports and respondent-level research data
+*.csv
+*.xlsx
+*.xls
+*.ods
+participant_data*/
+survey_responses*/
+raw_interview_notes/
+raw_research_data/
+
+# Secrets and local tooling
+.env
+.env.*
+!.env.example
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+coverage/
+playwright-report/
+test-results/
+
+# Generated repository packaging
+*.bundle
+__pycache__/
+*.py[cod]
