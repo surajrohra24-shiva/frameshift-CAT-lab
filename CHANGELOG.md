@@ -1,5 +1,14 @@
 # Changelog
 
+## v10 — Session recovery and accessibility hardening
+
+- Add tab-scoped `sessionStorage` snapshots for active tasks, selected answers, feedback state, elapsed times, hints, review flags, scratchpad content and current mixed-practice position. A start-screen banner allows a participant to resume or discard saved progress after a refresh.
+- Remove Enter-to-submit handlers from TITA text inputs; submission now requires activating the visible Check answer button (including normal keyboard activation when focused).
+- Hide the SVG chart drawing from assistive technology and expose its equivalent semantic HTML data table open by default.
+- Keep raw survey spreadsheets and session CSV exports excluded from version control; no participant-level data is included in the repository.
+- Update the regression suite and documentation to cover persistence, TITA submission behaviour and chart-table accessibility.
+
+
 ## v9 — Difficulty levels, visual DI and personalised recap
 
 - Add Low, Medium and High difficulty selection with distinct DILR and mixed-practice variants. High DILR tasks use TITA-style one-letter responses. Labels are exploratory, not CAT-calibrated.

@@ -1,16 +1,23 @@
-# Gemini review prompt — FrameShift v9
+# Gemini review prompt — FrameShift v10
 
-Act as a senior front-end engineer, accessibility reviewer, product analyst and learning-experience designer. Review the attached `index.html` and relevant docs as source code and product artifacts. Be explicit about whether you can execute the file in a live browser; do not claim to have tested interactions if you only inspected source.
+Review the attached `index.html` as a senior front-end engineer, accessibility reviewer and learning-experience designer. Static review is fine, but clearly distinguish inspection from live execution.
 
-Priorities:
-1. Verify the DILR answer keys and explanations for Low, Medium and High by enumerating all valid arrangements.
-2. Assess whether High is meaningfully harder without making the difficulty labels sound officially CAT-calibrated.
-3. Review the visual DI chart against its accessible data table and verify the correct answer at each level.
-4. Check the personalised feedback modal for correctness, useful next steps, accessibility and overclaiming.
-5. Check progressive Coach hints, keyboard-only flow, Enter-button interaction, dark theme contrast, reduced-motion behaviour, mobile layout, calculator semantics, focus return, and chat auto-scroll.
-6. Review DOM safety, CSV export and `.gitignore`; distinguish the GitHub Pages artifact from source repository visibility. Do not commit respondent-level data.
-7. Compare advertised capabilities from official current pages for CATin, AdaptHub, CATLab, IMS, iQuanta, 2IIM and MyCATPrep. Distinguish provider claims from independent evidence.
-8. Identify the three highest-priority defects or learning-experience improvements. Do not add features just for novelty.
-9. Identify what remains unvalidated by the small survey and by simulated/static evaluation.
+FrameShift is an exploratory CAT practice prototype, not an official CAT mock, validated diagnostic, percentile predictor or live AI tutor. Existing competitors advertise analytics, adaptive practice, hints and personalised recommendations, so do not claim these utilities are unique.
 
-Do not fabricate participants, interviews, quotations, test results, usage or learning outcomes. Public posts and retrospective mentoring recollections must stay distinctly labelled from genuine interviews. Return source links, issue severity, reproduction steps if executable, and prioritised findings.
+## v10 changes to review
+
+1. Tab-scoped `sessionStorage` saves active session state and allows resume/discard from the intro screen after refresh.
+2. TITA inputs no longer submit on Enter directly; the user activates the Check answer button.
+3. Visual chart SVG is `aria-hidden="true"` and the equivalent semantic HTML data table is open by default.
+4. `.gitignore` excludes CSV/XLSX exports and raw research data.
+
+## Review tasks
+
+- Verify DILR answer logic at all three difficulty levels.
+- Inspect `persistSessionState`, `safeSessionRead`, `updateResumeBanner` and `restoreSavedSession` for state loss, invalid state, edge cases and loops.
+- Check restore scenarios: Q1 unanswered/feedback, mixed unanswered/answered/skipped, Q2 with hints/feedback, and results.
+- Confirm Enter in a TITA field does not submit but keyboard activation of the Check answer button works normally.
+- Review the chart's accessible table, SVG semantics, keyboard order and reduced-motion behaviour.
+- Identify any XSS, storage, data-loss, or privacy issues. Session notes must not be sent to a server; raw respondent data must not be committed.
+- Assess whether the practice questions and explanations remain logically correct. Do not claim CAT difficulty calibration without evidence.
+- Provide the three highest-priority defects, concrete fixes and test steps. Do not invent user-test results or market statistics.
