@@ -34,3 +34,13 @@
 - Added session export and supporting product documentation.
 
 Earlier iterations introduced the focus-switch flow, dark mode, animated transitions, progressive DILR feedback, scratchpads, review flags and session summary.
+
+
+## v11 — Gemini review fixes (27 October 2026)
+
+- Added a keyboard focus trap to the personalised feedback modal and restored focus to the results heading or invoking context when the modal closes.
+- Added difficulty-aware TITA answer validation, with visible and screen-reader-announced feedback for labels outside the valid entity range.
+- Added active-time clock handling: elapsed timers pause when the page becomes hidden, then shift their start references on return so background time is not counted. The pause/resume behavior covers the session, active question, and feedback review intervals.
+- Updated the local session-storage key to `frameshift-session-v11` to keep v11 snapshots separate from earlier prototype versions.
+- Added source-integrity assertions for these behaviours and updated QA documentation.
+- No new gamification or animation effects were added; focus remains on reliability and accessibility.

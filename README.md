@@ -4,7 +4,7 @@ A self-contained browser prototype exploring whether a short, guided practice se
 
 > **Prototype status:** Exploratory MVP. It is not an official CAT mock, validated diagnostic, percentile predictor, live AI tutor or evidence of improved CAT performance. All questions are original illustrative items and are not independently CAT-calibrated.
 
-## v10 features
+## v11 features
 
 - Six-task guided practice journey: DILR ordering, Quant percentages, VARC inference, Quant scoring, visual data interpretation, and a new DILR transfer set.
 - Step-by-step solutions, candidate-placement diagrams and expandable distractor rationales.
@@ -17,7 +17,7 @@ A self-contained browser prototype exploring whether a short, guided practice se
 - Accessible SVG chart questions with a corresponding data table.
 - A performance-based end-of-session modal with a suggested next action; it is rule-based and explicitly not a validated diagnostic.
 - CSV session export, with coach messages excluded from the export; aggregate topic counts and hint levels may be recorded.
-- In-progress sessions are saved in `sessionStorage` within the current browser tab and can be resumed after a refresh. A user can discard saved progress from the start screen. This is tab-local persistence, not cloud sync.
+- In-progress sessions are saved in `sessionStorage` within the current browser tab and can be resumed after a refresh. A user can discard saved progress from the start screen. Active timers pause while the tab is hidden and resume without counting hidden time. This is tab-local persistence, not cloud sync.
 
 ## Run locally
 
@@ -38,6 +38,7 @@ The provided Google Forms survey had 15 submitted records and 14 valid responses
 - [`docs/PRODUCT_HYPOTHESES.md`](docs/PRODUCT_HYPOTHESES.md) — hypotheses and disconfirming evidence.
 - [`docs/PRODUCT_DECISIONS_V8.md`](docs/PRODUCT_DECISIONS_V8.md) — rationale for progressive hints, keyboard handling and privacy protection.
 - [`docs/PRODUCT_DECISIONS_V10.md`](docs/PRODUCT_DECISIONS_V10.md) — session recovery, explicit TITA submission and chart accessibility decisions.
+- [`docs/PRODUCT_DECISIONS_V11.md`](docs/PRODUCT_DECISIONS_V11.md) — focus-trapped feedback modal, difficulty-aware TITA validation and active-time clock handling.
 - [`docs/COMPETITOR_REVIEW.md`](docs/COMPETITOR_REVIEW.md) — capability claims and overlap.
 - [`docs/UI_BENCHMARK.md`](docs/UI_BENCHMARK.md) — UI principles applied.
 - [`docs/SURVEY_INSIGHTS.md`](docs/SURVEY_INSIGHTS.md) — aggregate survey evidence with denominators and limitations.

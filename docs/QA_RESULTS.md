@@ -1,33 +1,30 @@
-# QA results — FrameShift v10
+# QA results — FrameShift v11
 
-**Date:** 27 October 2026
-**Scope:** static source checks, exhaustive DILR answer-key validation, and a scripted Chromium interaction test using a fresh document with a seeded tab-storage snapshot. Direct file navigation was blocked by the environment (`ERR_BLOCKED_BY_ADMINISTRATOR`), so a manual refresh test on the downloaded file is still recommended.
+**Date:** 27 October 2026  
+**Scope:** DILR permutation checks, JavaScript/source integrity, and a scripted headless Chromium interaction using the HTML loaded via `page.set_content`.
 
-## v10 checks
+## v11 checks
 
-- DILR logic unit tests cover the Low / Medium / High answer keys by enumerating all permutations: Q1 answers E / E / G; Q2 answers A / A / C.
-- JavaScript syntax check passes for the inline script.
-- HTML contains a versioned `sessionStorage` snapshot and explicit resume/discard controls on the intro screen.
-- TITA inputs no longer have their own Enter-to-submit keydown handler. The document-level global shortcut ignores input elements, so users submit with the Check answer button or by keyboard-focusing that button and activating it.
-- The visual chart SVG is marked `aria-hidden="true"` and `focusable="false"`; the equivalent semantic HTML data table is present in a `<details open>` element.
-- `.gitignore` excludes `*.csv`, `*.xlsx`, raw interview notes, and raw research data. No participant-level survey data is committed.
-- Scripted Chromium interaction checks restored an unanswered Q1 with its selected answer, restored Q1 feedback, verified that Enter in TITA does not submit, verified keyboard activation of Check answer, and restored Q2 feedback and the results screen from seeded snapshots.
-- Visual-DI inspection reported `aria-hidden="true"` on the SVG and an open semantic data table. The scripted flow produced no page-level JavaScript errors.
-- Progressive hints, calculator, local Coach, light/dark theme, personalized result modal, three difficulty levels and CSV export remain in the source.
+- DILR answer-key unit tests enumerate all permutations for Low / Medium / High: Q1 answers E / E / G; Q2 answers A / A / C.
+- JavaScript syntax check passes.
+- HTML contains no duplicate IDs.
+- Modal focus trap: Shift+Tab from the first feedback-modal control wraps to `feedbackOpenCoach`; Tab from the last control wraps to `closeFeedbackBtn`. The “View full results” action restores focus to `resultTitle`.
+- TITA validation rejects an unsupported `Z` at High difficulty, keeps Check answer disabled, and announces that the label range is A–G. Entering `G` enables submission and the High Q1 feedback is correct.
+- Active-time timer pause/resume logic was simulated in Chromium by pausing the effective clock and dispatching a visibility change; the displayed elapsed seconds were unchanged across the hidden interval. This does not replace a physical multi-minute tab-background test.
+- Full six-task Medium flow reached the personalised feedback modal. No browser JavaScript exceptions were captured in this run.
+- `.gitignore` excludes CSV, XLSX and raw respondent data.
+- Updated source-integrity tests assert the focus trap, return focus, TITA bounds and active-time pause behavior.
 
-## Existing validated logic
+## Notes on test environment
 
-- Python unit tests enumerate all permutations for Low / Medium / High DILR answer keys.
-- Prior v9 scripted checks passed the six-task flow, calculator basics, hint progression, feedback modal and theme toggle. Those earlier checks do not, by themselves, validate the new v10 persistence/rehydration flow.
+Navigation to a local HTTP server was blocked by the test environment's administrator policy, so the scripted interaction loaded the file with `page.set_content`. This run therefore did not validate actual `sessionStorage` recovery across a real page reload. Existing v10 seeded-state checks remain useful, and a manual refresh/resume check in the downloaded v11 file is recommended. Screen-reader behavior and visual contrast have not been physically audited.
 
 ## Known limitations
 
-- Session save/restore has passed a seeded-snapshot interaction test for Q1 selection/feedback, Q2 feedback and the results screen. Still manually verify a real refresh in Chrome and the remaining states: unanswered mixed item, already-answered mixed item, skipped mixed item, and Q2 with hints.
-- Screen-reader behaviour and visual contrast have not been physically validated in this run.
-- Sample questions are original illustrative items, not independently CAT-calibrated.
-- The Coach remains a local rule-based demo; no live generative AI or human mentor is connected.
-- The calculator is sequential and does not use a full BEDMAS expression parser.
-- The personalized recap is a rule-based heuristic, not a validated diagnosis or CAT percentile prediction.
+- The Coach is a local rule-based demo, not live generative AI or a human mentor.
+- The calculator evaluates chained operations sequentially rather than with full BEDMAS precedence.
+- Difficulty levels are prototype-defined and not officially CAT-calibrated.
+- The personalised recap is rule-based, not a validated diagnosis or percentile predictor.
 - No real-user study establishes learning transfer, score improvement, adoption or retention.
-- The Google Forms sample is self-selected and small (15 submitted; 14 valid for most core questions).
-- Keep raw participant data outside the repository, even if the GitHub Pages workflow deploys only `index.html`.
+- The survey remains small and self-selected (15 submitted; 14 valid for most core questions).
+- Keep raw survey response files outside the repository and review `git status` before every commit.

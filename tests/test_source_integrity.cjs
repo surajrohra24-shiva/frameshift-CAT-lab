@@ -30,9 +30,13 @@ assert(html.includes("if(e.key==='Enter'&&(e.target?.closest?.('button')||docume
   'Global Enter handler is missing the native-button guard.');
 assert(html.includes('function progressiveDILRHint(key)'), 'Progressive DILR hint function is missing.');
 assert(html.includes('record.coachHintStages={...coachHintStages}'), 'Coach hint stage is not included in local session state.');
-assert(html.includes("const SESSION_STORAGE_KEY='frameshift-session-v10'"), 'Session storage key/version is missing.');
+assert(html.includes("const SESSION_STORAGE_KEY='frameshift-session-v11'"), 'Session storage key/version is missing.');
 assert(html.includes('function persistSessionState()') && html.includes('function restoreSavedSession()'), 'Session save/restore functions are missing.');
 assert(html.includes('id=\"resumeSessionBtn\"') && html.includes('id=\"discardSessionBtn\"'), 'Resume/discard controls are missing.');
+assert(html.includes('function trapFeedbackFocus(e)'), 'Personalised feedback modal must trap keyboard focus.');
+assert(html.includes('feedbackReturnFocus'), 'Personalised feedback modal must restore focus when closed.');
+assert(html.includes('function allowedTitaLabels()') && html.includes('function updateTitaInput(key)'), 'Difficulty-specific TITA validation is missing.');
+assert(html.includes('function timerNow()') && html.includes("document.addEventListener('visibilitychange'"), 'Active-time pause/resume clock is missing.');
 assert(!html.includes("$('q1Tita').addEventListener('keydown'"), 'Q1 TITA must not auto-submit on Enter.');
 assert(!html.includes("$('q2Tita').addEventListener('keydown'"), 'Q2 TITA must not auto-submit on Enter.');
 assert(html.includes('aria-hidden=\"true\" focusable=\"false\">${grid.join'), 'Visual SVG must be hidden from assistive tech when equivalent table is exposed.');
@@ -41,4 +45,4 @@ assert(gitignore.split(/\r?\n/).includes('*.csv'), '.gitignore must exclude CSV 
 assert(gitignore.split(/\r?\n/).includes('*.xlsx'), '.gitignore must exclude spreadsheet exports.');
 assert(!/AIza[0-9A-Za-z_-]{30,}/.test(html), 'Potential Google API key found in the prototype source.');
 assert(!/sk-[A-Za-z0-9]{20,}/.test(html), 'Potential API secret found in the prototype source.');
-console.log(`Source integrity passed: ${ids.length} unique IDs, ${scripts.length} script block(s), session recovery, TITA submission guards, chart-table accessibility and export ignore rules.`);
+console.log(`Source integrity passed: ${ids.length} unique IDs, ${scripts.length} script block(s), session recovery, modal focus trap, difficulty-aware TITA validation, hidden-tab timer pause, chart-table accessibility and export ignore rules.`);
