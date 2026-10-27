@@ -4,7 +4,7 @@ A self-contained browser prototype exploring whether a short, guided practice se
 
 > **Prototype status:** Exploratory MVP. It is not an official CAT mock, validated diagnostic, percentile predictor, live AI tutor or evidence of improved CAT performance. All questions are original illustrative items and are not independently CAT-calibrated.
 
-## v12 features
+## v13 features
 
 - Six-task guided practice journey: DILR ordering, Quant percentages, VARC inference, Quant scoring, visual data interpretation, and a new DILR transfer set.
 - Step-by-step solutions, candidate-placement diagrams and expandable distractor rationales.
@@ -40,6 +40,7 @@ The provided Google Forms survey had 15 submitted records and 14 valid responses
 - [`docs/PRODUCT_DECISIONS_V10.md`](docs/PRODUCT_DECISIONS_V10.md) — session recovery, explicit TITA submission and chart accessibility decisions.
 - [`docs/PRODUCT_DECISIONS_V11.md`](docs/PRODUCT_DECISIONS_V11.md) — focus-trapped feedback modal, difficulty-aware TITA validation and active-time clock handling.
 - [`docs/PRODUCT_DECISIONS_V12.md`](docs/PRODUCT_DECISIONS_V12.md) — debounced TITA announcements, opt-in personalised recap, and system theme synchronization.
+- [`docs/PRODUCT_DECISIONS_V13.md`](docs/PRODUCT_DECISIONS_V13.md) — screen-heading focus, calculator/Coach focus traps and TITA timeout/layout-shift fixes.
 - [`docs/COMPETITOR_REVIEW.md`](docs/COMPETITOR_REVIEW.md) — capability claims and overlap.
 - [`docs/UI_BENCHMARK.md`](docs/UI_BENCHMARK.md) — UI principles applied.
 - [`docs/SURVEY_INSIGHTS.md`](docs/SURVEY_INSIGHTS.md) — aggregate survey evidence with denominators and limitations.
@@ -49,11 +50,12 @@ The provided Google Forms survey had 15 submitted records and 14 valid responses
 
 ## Run automated checks
 
-Python 3 and Node.js are sufficient:
+The core checks need Python 3 and Node.js. The end-to-end browser smoke test additionally needs the Python Playwright package and Chromium:
 
 ```bash
 python -m unittest discover -s tests -v
 node tests/test_source_integrity.cjs
+python tests/test_v13_browser.py  # requires Playwright + Chromium
 ```
 
 ## Publish with GitHub Pages

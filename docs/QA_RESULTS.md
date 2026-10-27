@@ -1,26 +1,27 @@
-# QA results — FrameShift v12
+# QA results — FrameShift v13
 
 **Date:** 27 October 2026  
-**Scope:** Answer-key enumeration, source integrity, accessible controls, TITA live-region behavior, explicit recap action, theme preference synchronization, and scripted Chromium interaction checks.
+**Scope:** Screen-heading focus on route changes, calculator/Coach focus traps, TITA validation-timeout cleanup, core question logic, and end-to-end browser flow.
 
-## v12 checks
+## Automated checks
 
-- DILR permutation tests enumerate Low / Medium / High answer keys: Q1 E / E / G; Q2 A / A / C.
-- JavaScript syntax check passes; HTML has no duplicate IDs.
-- TITA filtering and Check Answer state remain immediate; only the `aria-live` message and `aria-invalid` update are debounced by 600 ms. Blur flushes validation immediately. Unsupported answer letters remain blocked.
-- `showResults()` no longer opens the feedback modal automatically. The results heading receives focus, and **View Personalised Recap** opens the modal on explicit activation.
-- Theme initialization prefers an explicitly selected theme; otherwise it follows `prefers-color-scheme` and responds to OS changes. Manual toggles persist a choice marker. Legacy theme values are not blindly trusted because earlier versions persisted auto-detected OS modes as if they were manual choices.
-- Session snapshots do not reapply the prior theme as a manual override.
-- Existing focus trap, active-time clock pause, chart-table accessibility, CSV/XLSX `.gitignore` and local-only session behavior remain in place.
-- Python DILR tests (4 tests) and Node source-integrity assertions passed after the v12 changes.
-- Scripted Chromium smoke tests passed using `page.set_content` because navigation to local files is blocked by the test environment: (1) system theme follows OS changes before a manual override, and the manual choice is respected afterward; (2) TITA validation message remains quiet while typing, appears after the debounce, clears promptly on blur, and button state is immediate; (3) the complete six-task route reaches results without opening the modal automatically, the results heading receives focus, the recap button opens the modal, and closing it restores focus to the button.
-- Theme migration tests passed for empty preferences, a legacy theme conflicting with the current OS, a legacy value matching the OS (continues to follow OS), and an explicit manual override.
+- Four DILR permutation tests pass across Low / Medium / High question variants.
+- JavaScript syntax and source-integrity tests pass.
+- Screen transitions focus the new screen heading (intro, task screens and results).
+- Calculator and Coach dialog focus remains within the active dialog under Tab and Shift+Tab; closing returns focus to the launcher.
+- TITA validation remains debounced during typing; submission clears any pending timer and synchronizes the final `aria-invalid`/message state. Playwright reproduced a layout shift when a prior error cleared on blur before pointer click; the validation line now reserves enough vertical space, and the regression test confirms the Check answer button position remains stable.
+- The complete High-difficulty practice route reaches results in scripted Chromium testing. The test covers Q1 invalid-to-valid TITA entry, timer cleanup, answer feedback, heading focus, mixed practice, Q2 submission, results, modal focus cycling, and calculator/Coach drawer focus traps.
+- The personalised recap does not open automatically; explicit activation opens it and the modal traps focus.
+- Git ignore rules continue to exclude CSV/XLSX exports and local research files.
 
-## Known limitations / manual checks
+## Test run
 
-- A physical screen-reader audit has not been completed; debounce timing reduces repetitive announcements but needs assistive-technology testing.
-- A scripted media-emulation test verified OS-theme changes and explicit overrides. Still manually verify a real operating-system appearance change in the downloaded file.
-- The scripted six-task flow verified the recap modal is not shown automatically, the results heading is focused after finishing, and the recap button opens the modal. Confirm these paths manually with a keyboard and screen reader.
-- Check a multi-minute hidden-tab timer pause and refresh/resume using the downloaded file in the target browser; earlier timer simulation passed, but this v12 run focused on the requested three changes.
-- The Coach is a local rule-based demo, not live AI or a human mentor. Difficulty tiers are prototype-defined, not officially CAT-calibrated. Personalised recommendations are heuristic, not a validated diagnosis or score predictor. No real-user study establishes learning transfer, score improvement, adoption or retention.
-- The survey is small and self-selected (15 submitted; 14 valid for most core questions). Keep raw responses and exports outside the repository.
+Commands run successfully: `python -m unittest discover -s tests -v` (4 tests), `node tests/test_source_integrity.cjs`, and `python tests/test_v13_browser.py` (scripted Chromium via Playwright). The loopback server is blocked in this environment, so the test injects the complete HTML into a real Chromium page with `page.set_content`; it exercises actual DOM events and focus behavior but is not a deployed-site test.
+
+## Manual checks still recommended
+
+- Physically test with NVDA on Windows or VoiceOver on macOS/iOS, including announcement verbosity for TITA validation and heading changes.
+- Use Chrome's DevTools Accessibility tree and Lighthouse, then run axe DevTools on the deployed page.
+- Keyboard-test the drawers and feedback modal without using the mouse; this complements, but does not replace, automated checks.
+- Manually test mobile layout at common viewport widths and the system light/dark preference in an actual browser environment.
+- Do not describe this as a full accessibility certification or as proof that FrameShift improves learning. The prototype and 14-response usable survey are exploratory only.

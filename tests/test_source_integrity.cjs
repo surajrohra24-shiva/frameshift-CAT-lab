@@ -36,6 +36,7 @@ assert(html.includes('id=\"resumeSessionBtn\"') && html.includes('id=\"discardSe
 assert(html.includes('function trapFeedbackFocus(e)'), 'Personalised feedback modal must trap keyboard focus.');
 assert(html.includes('feedbackReturnFocus'), 'Personalised feedback modal must restore focus when closed.');
 assert(html.includes('function allowedTitaLabels()') && html.includes('function updateTitaInput(key)'), 'Difficulty-specific TITA validation is missing.');
+assert(html.includes('.tita-validation{font-size:11px;color:var(--bad);font-weight:750;margin:0;min-height:1.55em}.tita-validation:empty{visibility:hidden}'), 'TITA validation line must reserve space to prevent submit-button layout shift.');
 assert(html.includes('function timerNow()') && html.includes("document.addEventListener('visibilitychange'"), 'Active-time pause/resume clock is missing.');
 assert(!html.includes("$('q1Tita').addEventListener('keydown'"), 'Q1 TITA must not auto-submit on Enter.');
 assert(!html.includes("$('q2Tita').addEventListener('keydown'"), 'Q2 TITA must not auto-submit on Enter.');
@@ -45,11 +46,15 @@ assert(gitignore.split(/\r?\n/).includes('*.csv'), '.gitignore must exclude CSV 
 assert(gitignore.split(/\r?\n/).includes('*.xlsx'), '.gitignore must exclude spreadsheet exports.');
 assert(!/AIza[0-9A-Za-z_-]{30,}/.test(html), 'Potential Google API key found in the prototype source.');
 assert(!/sk-[A-Za-z0-9]{20,}/.test(html), 'Potential API secret found in the prototype source.');
-assert(html.includes('const titaValidationTimeouts={q1:null,q2:null}') && html.includes('setTimeout(()=>renderTitaValidation(key),600)'), 'TITA live-region validation must be debounced by input.');
+assert(html.includes('const titaValidationTimeouts={q1:null,q2:null}') && html.includes('setTimeout(()=>{titaValidationTimeouts[key]=null;renderTitaValidation(key);},600)'), 'TITA live-region validation must be debounced and clear its fired timeout handle.');
 assert(html.includes('function flushTitaValidation(key)') && html.includes("addEventListener('blur',()=>flushTitaValidation('q1'))"), 'TITA validation must flush on blur.');
+assert(html.includes('function focusScreenHeading(target)') && html.includes('focusScreenHeading(target)'), 'Screen transitions must focus the new screen heading.');
+assert(html.includes('function trapDrawerFocus(e)') && html.includes("document.addEventListener('keydown',trapDrawerFocus)"), 'Calculator and coach drawers must trap keyboard focus.');
+assert(/function showQ1Feedback\(\)\{clearTimeout\(titaValidationTimeouts\.q1\);titaValidationTimeouts\.q1=null;/.test(html), 'Q1 submit must cancel pending TITA validation.');
+assert(/function showQ2Feedback\(\)\{clearTimeout\(titaValidationTimeouts\.q2\);titaValidationTimeouts\.q2=null;/.test(html), 'Q2 submit must cancel pending TITA validation.');
 assert(html.includes('id=\"openRecapBtn\"') && html.includes("$('openRecapBtn').addEventListener('click',()=>{"), 'The results screen must expose an explicit personalised recap action.');
 assert(!/function showResults\(\)[\s\S]*?setTimeout\(\(\)=>openPersonalFeedback/.test(html), 'Results must not auto-open the personalised modal.');
 assert(html.includes('function applyTheme(theme,persistChoice=true)') && html.includes('frameshift-theme-manual'), 'Theme handling must distinguish explicit user preference from OS theme.');
 assert(html.includes("media.addEventListener('change',syncFromOS)") && html.includes("applyTheme(e.matches?'dark':'light',false)"), 'OS theme changes should sync only when no explicit override exists.');
 assert(!html.includes('if(snap.theme)applyTheme(snap.theme)'), 'Session restoration must not turn a snapshot theme into a manual override.');
-console.log(`Source integrity passed: ${ids.length} unique IDs, ${scripts.length} script block(s), session recovery, modal focus trap, debounced TITA validation, explicit recap control, OS-theme synchronization, chart-table accessibility and export ignore rules.`);
+console.log(`Source integrity passed: ${ids.length} unique IDs, ${scripts.length} script block(s), session recovery, screen-heading focus, modal and drawer focus traps, debounced TITA validation, explicit recap control, OS-theme synchronization, chart-table accessibility and export ignore rules.`);

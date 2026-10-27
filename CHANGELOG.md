@@ -1,3 +1,11 @@
+## v13 — Screen focus, drawer focus traps and TITA timeout cleanup (27 October 2026)
+
+- Move keyboard focus to the main heading after each practice-screen transition.
+- Add reusable keyboard focus trapping for the calculator and Coach drawers, with focus restoration and launcher `aria-expanded` state.
+- Cancel pending TITA validation timers when submitting; flush the current value so `aria-invalid` and the validation message cannot remain stale. Fired timeout handles are cleared.
+- Reserve stable vertical space for the TITA validation line so clearing an old error on blur cannot move the Check answer button during pointer activation.
+- Add Playwright browser-flow checks and document remaining manual assistive-technology checks.
+
 ## v12 — Accessible validation, user-controlled recap and OS theme sync (27 October 2026)
 
 - Debounce TITA validation messaging by 600 ms so the `aria-live` region does not announce errors on every keystroke. Input normalization and Check Answer eligibility still update immediately; blur flushes validation promptly.
