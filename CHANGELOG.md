@@ -1,3 +1,11 @@
+## v12 — Accessible validation, user-controlled recap and OS theme sync (27 October 2026)
+
+- Debounce TITA validation messaging by 600 ms so the `aria-live` region does not announce errors on every keystroke. Input normalization and Check Answer eligibility still update immediately; blur flushes validation promptly.
+- Remove automatic opening of the personalised feedback modal at session completion. The results screen now presents an explicit **View Personalised Recap** button, and focus moves to the results heading when the screen appears.
+- Synchronize light/dark theme with the operating-system preference when no explicit user override exists. Explicit theme toggles persist a separate manual-choice marker. Legacy theme values from earlier versions are migrated cautiously because old versions stored automatic OS choices as if they were user selections.
+- Session restoration no longer overwrites the resolved theme from an old snapshot.
+- Add source-integrity regression assertions for debounced TITA validation, explicit recap opening, OS theme synchronization, and theme migration behavior.
+
 # Changelog
 
 ## v10 — Session recovery and accessibility hardening
